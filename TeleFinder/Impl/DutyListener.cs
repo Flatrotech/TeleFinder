@@ -1,10 +1,10 @@
 using Dalamud.Logging;
 using Dalamud.Utility;
 using Lumina.Excel.GeneratedSheets;
-using PushyFinder.Delivery;
-using PushyFinder.Util;
+using TeleFinder.Delivery;
+using TeleFinder.Util;
 
-namespace PushyFinder.Impl;
+namespace TeleFinder.Impl;
 
 public class DutyListener
 {
@@ -20,7 +20,7 @@ public class DutyListener
         Service.ClientState.CfPop -= OnDutyPop;
     }
 
-    private static void OnDutyPop(object? _, ContentFinderCondition e)
+    private static void OnDutyPop(ContentFinderCondition e)
     {
         if (!Plugin.Configuration.EnableForDutyPops)
             return;
@@ -29,6 +29,6 @@ public class DutyListener
             return;
         
         var dutyName = e.RowId == 0 ? "Duty Roulette" : e.Name.ToDalamudString().TextValue;
-        PushoverDelivery.Deliver($"Duty pop", $"Duty registered: '{dutyName}'.");
+        TelegramDelivery.Deliver($"Duty pop", $"Duty registered: '{dutyName}'.");
     }
 }

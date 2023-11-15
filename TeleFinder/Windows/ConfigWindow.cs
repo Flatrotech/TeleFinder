@@ -1,63 +1,49 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using PushyFinder.Delivery;
-using PushyFinder.Util;
+using TeleFinder.Delivery;
+using TeleFinder.Util;
 
-namespace PushyFinder.Windows;
+namespace TeleFinder.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
-    private Configuration Configuration;
+    private Configuration configuration;
     
     public ConfigWindow(Plugin plugin) : base(
-        "PushyFinder Configuration",
+        "TeleFinder Configuration",
         ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Configuration = Plugin.Configuration;
+        configuration = Plugin.Configuration;
     }
 
     public void Dispose() { }
 
-    private TimedBool notifSentMessageTimer = new(3.0f);
+    private readonly TimedBool notifSentMessageTimer = new(3.0f);
 
     public override void Draw()
     {
         {
-            var cfg = Configuration.PushoverAppKey;
-            if (ImGui.InputText("Application key", ref cfg, 2048u))
+            var cfg = configuration.TelegramUsername;
+            if (ImGui.InputText("Telegram Username", ref cfg, 2048u))
             {
-                Configuration.PushoverAppKey = cfg;
+                configuration.TelegramUsername = cfg;
             }
         }
         {
-            var cfg = Configuration.PushoverUserKey;
-            if (ImGui.InputText("User key", ref cfg, 2048u))
-            {
-                Configuration.PushoverUserKey = cfg;
-            }
-        }
-        {
-            var cfg = Configuration.PushoverDevice;
-            if (ImGui.InputText("Device name", ref cfg, 2048u))
-            {
-                Configuration.PushoverDevice = cfg;
-            }
-        }
-        {
-            var cfg = Configuration.EnableForDutyPops;
+            var cfg = configuration.EnableForDutyPops;
             if (ImGui.Checkbox("Send message for duty pop?", ref cfg))
             {
-                Configuration.EnableForDutyPops = cfg;
+                configuration.EnableForDutyPops = cfg;
             }
         }
 
         if (ImGui.Button("Send test notification"))
         {
             notifSentMessageTimer.Start();
-            PushoverDelivery.Deliver("Test notification", 
+            TelegramDelivery.Deliver("Test notification", 
                                      "If you received this, PushyFinder is configured correctly.");
         }
 
@@ -68,14 +54,14 @@ public class ConfigWindow : Window, IDisposable
         }
 
         {
-            var cfg = Configuration.IgnoreAfkStatus;
+            var cfg = configuration.IgnoreAfkStatus;
             if (ImGui.Checkbox("Ignore AFK status and always notify", ref cfg))
             {
-                Configuration.IgnoreAfkStatus = cfg;
+                configuration.IgnoreAfkStatus = cfg;
             }
         }
 
-        if (!Configuration.IgnoreAfkStatus)
+        if (!configuration.IgnoreAfkStatus)
         {
             if (!CharacterUtil.IsClientAfk())
             {
@@ -100,7 +86,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (ImGui.Button("Save and close"))
         {
-            Configuration.Save();
+            configuration.Save();
             IsOpen = false;
         }
     }

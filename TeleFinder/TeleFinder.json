@@ -1,0 +1,13 @@
+{
+  "Author": "Flatrotech",
+  "Name": "TeleFinder",
+  "Punchline": "Telegram push notifications for the Party Finder.",
+  "Description": "A plugin that uses Telegram (https://telegram.org) to send push notifications when party members join or leave, or when a duty finder queue is initiated.",
+  "InternalName": "PushyFinder",
+  "ApplicableVersion": "any",
+  "Tags": [
+      "party-finder",
+      "afk", 
+      "notifications"
+  ]
+}

@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace PushyFinder.Util;
+namespace TeleFinder.Util;
 
 public class TimedBool
 {

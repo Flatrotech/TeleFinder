@@ -1,7 +1,7 @@
 using System.Linq;
 using Lumina.Excel.GeneratedSheets;
 
-namespace PushyFinder.Util;
+namespace TeleFinder.Util;
 
 public static class LuminaDataUtil
 {

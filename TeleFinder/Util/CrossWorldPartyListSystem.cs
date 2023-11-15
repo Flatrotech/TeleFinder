@@ -4,9 +4,10 @@ using Dalamud.Game;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Logging;
 using Dalamud.Memory;
+using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI.Info;
 
-namespace PushyFinder.Util;
+namespace TeleFinder.Util;
 
 public static class CrossWorldPartyListSystem
 {
@@ -38,8 +39,8 @@ public static class CrossWorldPartyListSystem
         Service.Framework.Update -= Update;
     }
 
-    private static List<CrossWorldMember> members = new();
-    private static List<CrossWorldMember> oldMembers = new();
+    private static List<CrossWorldMember> Members = new();
+    private static List<CrossWorldMember> OldMembers = new();
 
     static bool ListContainsMember(List<CrossWorldMember> l, CrossWorldMember m)
     {
@@ -53,7 +54,7 @@ public static class CrossWorldPartyListSystem
         return false;
     }
 
-    static unsafe void Update(Framework framework)
+    static unsafe void Update(IFramework framework)
     {
         if (!Service.ClientState.IsLoggedIn)
             return;
@@ -61,7 +62,7 @@ public static class CrossWorldPartyListSystem
         if (!InfoProxyCrossRealm.IsCrossRealmParty())
             return;
         
-        members.Clear();
+        Members.Clear();
         var partyCount = InfoProxyCrossRealm.GetPartyMemberCount();
         for (var i = 0u; i < partyCount; i++)
         {
@@ -74,17 +75,17 @@ public static class CrossWorldPartyListSystem
                 Level = addr->Level,
                 JobId = addr->ClassJobId,
             };
-            members.Add(mObj);
+            Members.Add(mObj);
         }
         
-        if (members.Count != oldMembers.Count)
+        if (Members.Count != OldMembers.Count)
         {
             // a change has been detected
             
             // Check for joins
-            foreach (var i in members)
+            foreach (var i in Members)
             {
-                if (!ListContainsMember(oldMembers, i))
+                if (!ListContainsMember(OldMembers, i))
                 {
                     // member joined
                     OnJoin?.Invoke(i);
@@ -93,9 +94,9 @@ public static class CrossWorldPartyListSystem
             
             // Check for leaves
             // Is this what we call 'iterating too much?'
-            foreach (var i in oldMembers)
+            foreach (var i in OldMembers)
             {
-                if (!ListContainsMember(members, i))
+                if (!ListContainsMember(Members, i))
                 {
                     // member left
                     OnLeave?.Invoke(i);
@@ -104,6 +105,6 @@ public static class CrossWorldPartyListSystem
         }
         
         // REFERENCE FUNNIES?
-        oldMembers = members.ToList();
+        OldMembers = Members.ToList();
     }
 }

@@ -1,34 +1,35 @@
-﻿using Dalamud.Game.Command;
+using Dalamud.Game.Command;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
-using PushyFinder.Impl;
-using PushyFinder.Util;
-using PushyFinder.Windows;
+using TeleFinder.Impl;
+using TeleFinder.Util;
+using TeleFinder.Windows;
+using Dalamud.Plugin.Services;
 
-namespace PushyFinder
+namespace TeleFinder
 {
     public sealed class Plugin : IDalamudPlugin
     {
-        public string Name => "PushyFinder";
-        private const string CommandName = "/pushyfinder";
+        public string Name => "TeleFinder";
+        private const string CommandName = "/telefinder";
 
         private DalamudPluginInterface PluginInterface { get; init; }
-        private CommandManager CommandManager { get; init; }
+        private ICommandManager CommandManager { get; init; }
         
         // This *is* used.
 #pragma warning disable CS8618
         public static Configuration Configuration { get; private set; }
 #pragma warning restore
         
-        public WindowSystem WindowSystem = new("PushyFinder");
+        public WindowSystem WindowSystem = new("TeleFinder");
 
         private ConfigWindow ConfigWindow { get; init; }
 
         public Plugin(
             [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
-            [RequiredVersion("1.0")] CommandManager commandManager)
+            [RequiredVersion("1.0")] ICommandManager commandManager)
         {
             pluginInterface.Create<Service>();
             
@@ -72,7 +73,7 @@ namespace PushyFinder
         {
             if (args == "debugOnlineStatus")
             {
-                Service.ChatGui.Print($"OnlineStatus ID = {Service.ClientState.LocalPlayer.OnlineStatus.Id}");
+                Service.ChatGui.Print($"OnlineStatus ID = {Service.ClientState?.LocalPlayer?.OnlineStatus.Id}");
                 return;
             }
             

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Luna@Nightshade (lostkagamine)</Authors>
-    <Company>Luna@Nightshade (lostkagamine)</Company>
-    <Version>1.0.0.1</Version>
+    <Authors>Flatrotech</Authors>
+    <Company>Flatrotech</Company>
+    <Version>1.0.0.0</Version>
     <Description>Check on your party while away from the computer.</Description>
-    <Copyright>(C) 2023 Luna@Nightshade (lostkagamine)</Copyright>
-    <PackageProjectUrl>https://github.com/ry00001/PushyFinder</PackageProjectUrl>
+    <Copyright>(C) Flatrotech</Copyright>
+    <PackageProjectUrl>https://github.com/Flatrotech/TeleFinder</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -30,8 +30,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DalamudPackager" Version="2.1.10" />
+    <PackageReference Include="DalamudPackager" Version="2.1.12" />
     <PackageReference Include="Flurl.Http" Version="3.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <Reference Include="FFXIVClientStructs">
       <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
       <Private>false</Private>

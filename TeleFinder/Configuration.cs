@@ -1,17 +1,18 @@
-﻿using Dalamud.Configuration;
+using Dalamud.Configuration;
 using Dalamud.Plugin;
 using System;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
-namespace PushyFinder
+namespace TeleFinder
 {
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 1;
 
-        public string PushoverAppKey { get; set; } = "";
-        public string PushoverUserKey { get; set; } = "";
-        public string PushoverDevice { get; set; } = "";
+        public string TelegramUsername { get; set; } = "";
         public bool EnableForDutyPops { get; set; } = true;
         public bool IgnoreAfkStatus { get; set; } = false;
 
