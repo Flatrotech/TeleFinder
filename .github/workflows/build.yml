@@ -7,7 +7,7 @@ jobs:
         runs-on: windows-latest
 
         env:
-            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+            DOTNET_SKIP_FIRST_TIME_EXPERIENCE: false
 
         steps:
             - name: Checkout and initialise
