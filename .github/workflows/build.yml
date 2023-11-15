@@ -25,7 +25,7 @@ jobs:
               run: dotnet restore --verbosity normal
 
             - name: Build Debug
-              run: dotnet build --no-restore --verbosity normal --configuration Debug -p:BotToken=$BOT_TOKEN
+              run: dotnet build --configuration Debug
               env:
                   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
