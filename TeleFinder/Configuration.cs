@@ -4,6 +4,7 @@ using System;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace TeleFinder
 {
@@ -11,7 +12,6 @@ namespace TeleFinder
     public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 1;
-
         public string TelegramUsername { get; set; } = "";
         public bool EnableForDutyPops { get; set; } = true;
         public bool IgnoreAfkStatus { get; set; } = false;
