@@ -21,11 +21,10 @@ jobs:
                   Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/latest.zip -OutFile ./latest.zip
                   Expand-Archive -Path ./latest.zip ./dalamud
 
-            - name: Restore project dependencies
-              run: dotnet restore --verbosity normal
-
             - name: Build Debug
-              run: dotnet build --configuration Debug
+              run: |
+                  dotnet restore --verbosity normal
+                  dotnet build --configuration Debug
               env:
                   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 
