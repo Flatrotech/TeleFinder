@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Dalamud.Logging;
 using Flurl;
@@ -8,8 +9,9 @@ namespace TeleFinder.Delivery;
 
 public static class TelegramDelivery
 {
-    public static readonly string TELEGRAM_API = "https://api.telegram.org/bot";
-    
+    public static readonly string TELEGRAM_API = $"https://api.telegram.org/bot{Environment.GetEnvironmentVariable("BotToken")}";
+
+
     public static void Deliver(string title, string text = "")
     {
         if (Plugin.Configuration.TelegramUsername.Length == 0) return;
